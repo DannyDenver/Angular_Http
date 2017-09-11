@@ -1,3 +1,4 @@
+import { ServerService } from './server.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,6 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  constructor(private serverService: ServerService){};
   servers = [
     {
       name: 'Testserver',
@@ -27,5 +29,10 @@ export class AppComponent {
   }
   private generateId() {
     return Math.round(Math.random() * 10000);
+  }
+
+  onSave(){
+    this.serverService.storeServers(this.servers)
+    .subscribe((response) => console.log(response), (error) => console.log(error));
   }
 }
